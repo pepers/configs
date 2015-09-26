@@ -17,7 +17,10 @@ myConfig = defaultConfig {
     focusedBorderColor = myFocusedBorderColor,
     startupHook        = myStartupHook,
     workspaces         = myWorkspaces
-    } `additionalKeys`
+    } `additionalKeys` surfacePro3Keys
+
+
+surfacePro3Keys =
     [ ((0, 0x1008ff13), spawn "amixer set Master 2%+"),
       ((0, 0x1008ff11), spawn "amixer set Master 2%-"),
       ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s"),
