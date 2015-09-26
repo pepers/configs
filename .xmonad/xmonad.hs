@@ -31,7 +31,7 @@ myWorkspaces = ["1:any", "2:code", "3:config"]
 
 myStartupHook :: X ()
 myStartupHook = do
-                 spawnToWorkspace "1:any" "gnome-terminal -e 'bash -c ~/Documents/invaders.bash;bash'"
+                 spawnToWorkspace "1:any" "gnome-terminal -e 'bash -c ~/.xmonad/invaders.bash;bash'"
                  spawnToWorkspace "3:config" "gnome-terminal -x vim $HOME/.xmobarrc"
                  spawnToWorkspace "3:config" "gnome-terminal -x vim $HOME/.xmonad/xmonad.hs"
                  spawnToWorkspace "3:config" "gnome-terminal -x vim $HOME/.vimrc"
