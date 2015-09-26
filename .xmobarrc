@@ -1,0 +1,45 @@
+Config { 
+  font    = "xft:Source Code Pro-11",
+  bgColor = "#073642",
+  fgColor = "#93a1a1",
+
+  position = TopW L 100, 
+
+  commands = [ 
+    Run Cpu [
+      "-H","50",
+      "--high","#dc322f" -- above 50% cpu usage, make red
+    ] 10,
+
+    Run Memory [
+      "-t","Mem: <usedratio>%"
+    ] 10,
+
+    Run Date "%a %b %_d %l:%M %P" "date" 10,
+
+    Run Battery [
+      "-t", "<acstatus>: <left>%", 
+      "--", 
+      "-O", "AC",
+      "-o", "Bat",
+      "-h", "#859900", -- green
+      "-l", "#dc322f"  -- red
+    ] 10,
+
+    Run Com "/bin/bash" [
+      "-c", "~/.xmonad/wireless.sh"
+    ] "wireless" 10,
+
+    Run Com "/bin/bash" [
+      "-c", "~/.xmonad/getvolume.bash"
+    ] "myvolume" 10,
+    
+    Run StdinReader
+   ],
+
+   sepChar = "%",
+
+   alignSep = "}{",
+
+   template = "%StdinReader% }{ %battery% | %cpu% | %memory% | %wireless% | Vol: %myvolume%   <fc=#268bd2>%date%</fc>  "
+}
