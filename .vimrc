@@ -1,22 +1,55 @@
-execute pathogen#infect()                  
+" Matthew Pepers
+" Colours {{{
+syntax on               " show colour syntax highligting
+set background=dark     " changes background color
+colorscheme solarized   " changes font colorscheme
+" }}}
+" Spaces & Tabs {{{
+set autoindent          " copies indentation of previous line when starting new line
+set tabstop=4           " existing tabs are 4 columns wide
+set softtabstop=4       " pressing tab moves 4 columns over
+set shiftwidth=4        " indenting is 4 column wide
+set expandtab           " use spaces for tabs
 
-" syntastic settings for syntax recognition
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+set modeline            " enable modelines
+set modelines=1         " check last line of file for modeline
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs = 1
+augroup indentation
+    autocmd!
 
+    autocmd FileType make  
+        \ setlocal noexpandtab
 
+    autocmd FileType markdown
+        \ set tabstop=2
+        \ softtabstop=2
+        \ shiftwidth=2
+        \ expandtab | retab
+
+    autocmd FileType c,cpp 
+        \ set tabstop=8 
+        \ softtabstop=4 
+        \ shiftwidth=4 
+        \ expandtab | retab 
+
+    autocmd FileType haskell 
+        \ set tabstop=8 
+        \ expandtab 
+        \ softtabstop=4 
+        \ shiftwidth=4 
+        \ shiftround
+augroup END	
+" }}}
+" UI Layout {{{
+set number              " show line numbers
+set relativenumber      " show relative line numbers 
+set showcmd             " show command in bottom bar
+set showmatch           " when cursor is on top of ({[etc. the matching ]}) will be highlighted     
+" }}}
+" Platform {{{
 " gui settings:
 if has('gui_running')
     set guioptions-=T				" no toolbar
-    set background=dark				" changes background color
-    colorscheme solarized			" changes font colorscheme
 
     " fonts across different platforms:
     if has("gui_gtk2")
@@ -34,23 +67,25 @@ else
 	GuiColorScheme solarized 
     endif	
 endif
-
-
-" key mappings
+" }}}
+" Custom Leader {{{
 let mapleader = "\<Space>"    " set the spacebar to be the Leader key
 nnoremap <Leader>o :enew<CR>
 nnoremap <Leader>w :w<CR>
 nmap <Leader>p "+p
 nmap <Leader>P "+P
-
-
-" common settings:
-syntax on		" show colour syntax highligting
-set number		" show line numbers
-set relativenumber	" show relative line numbers 
-set autoindent		" copies indentation of previous line when starting new line
-
-
+" }}}
+" Launch Config {{{
+execute pathogen#infect()                  
+" }}}
+" Folding {{{
+set foldmethod=indent   " fold based on indent level
+set foldnestmax=10      " max 10 depth
+set foldenable          " enable folding 
+set foldlevelstart=10   " start with fold level of 1
+nnoremap <space> za     " space opens/closes fold
+" }}}
+" Autogroups {{{
 " highlight text past 80 character standard limit 
 augroup text_too_wide
     autocmd!
@@ -58,60 +93,35 @@ augroup text_too_wide
     autocmd BufEnter * match OverLength /\%80v.*/
 augroup END
 
-
 " settings for recognizing new filetypes (for syntax highlighting)
 augroup file_types
     autocmd!
     autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 augroup END
 
-
 " reload vimrc each time it is saved 
 augroup reload_vimrc 
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END 
+" }}}
+" Syntastic {{{
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-
-" open NERDTree when vim starts 
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs = 1
+" }}}
+" NERDTree {{{
 augroup nerdtree
     let NERDTreeShowHidden=1
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 augroup END
+" }}}
 
-
-" indentation settings based on file type being edited:
-augroup indentation
-    autocmd!
-
-    autocmd FileType make  
-        \ setlocal noexpandtab
-
-    autocmd FileType markdown
-    	\ set tabstop=2
-	\ softtabstop=2
-	\ shiftwidth=2
-	\ expandtab | retab
-
-    autocmd FileType c,cpp 
-        \ set tabstop=8 
-        \ softtabstop=4 
-        \ shiftwidth=4 
-        \ expandtab | retab 
-
-    autocmd FileType haskell 
-        \ set tabstop=8 
-        \ expandtab 
-        \ softtabstop=4 
-        \ shiftwidth=4 
-        \ shiftround
-
-    autocmd Filetype java 
-        \ set makeprg=javac\ -d\ %:~:h:s?src?bin?\ % 
-        \ errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%# 
-        map <F9> :make<Return>:copen<Return> 
-        map <F10> :cprevious<Return> 
-        map <F11> :cnext<Return> 
-        map <F12> :!start cmd /k "java -classpath %:~:h:s?src?bin? %:r"
-augroup END	
+" vim: set foldmethod=marker foldlevel=0:
