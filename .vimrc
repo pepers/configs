@@ -3,6 +3,9 @@
 syntax on               " show colour syntax highligting
 set background=dark     " changes background color
 colorscheme solarized   " changes font colorscheme
+if !has('gui_running')  " running in terminal 
+    set t_Co=256
+endif
 " }}}
 " Spaces & Tabs {{{
 set autoindent          " copies indentation of previous line when starting new line
@@ -60,12 +63,6 @@ if has('gui_running')
         set guifont=Source_Code_Pro:h10:cANSI
         au GUIEnter * simalt ~x			" start window maximized	
     endif
-else
-    " running in linux terminal
-    if (&t_Co == 256 || &t_Co == 88) && filereadable(expand("$HOME/.vim/plugin/guicolorscheme.vim"))
-        runtime! plugin/guicolorscheme.vim
-	GuiColorScheme solarized 
-    endif	
 endif
 " }}}
 " Custom Leader {{{
