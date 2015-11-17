@@ -1,10 +1,22 @@
 " Matthew Pepers
-" Colours {{{
-syntax on               " show colour syntax highligting
-set background=dark     " changes background color
-colorscheme solarized   " changes font colorscheme
-if !has('gui_running')  " running in terminal 
-    set t_Co=256
+" Vundle {{{
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'severin-lemaignan/vim-minimap'
+call vundle#end()
+filetype plugin on
+" }}}
+ " Colours {{{
+syntax on                           " show colour syntax highligting
+set background=dark                 " changes background color
+colorscheme solarized               " changes font colorscheme
+autocmd VimEnter * Minimap          " shows minimap    
+if !has('gui_running')              " running in terminal 
+    set t_Co=256                    " use 256 colours in terminal
+    autocmd VimEnter * MinimapClose " closes minimap in terminal
 endif
 " }}}
 " Spaces & Tabs {{{
