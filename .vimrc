@@ -1,5 +1,5 @@
 " Matthew Pepers
-" Vundle {{{
+" Launch Config {{{
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -8,6 +8,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'severin-lemaignan/vim-minimap'
 call vundle#end()
 filetype plugin on
+execute pathogen#infect()
 " }}}
  " Colours {{{
 syntax on                           " show colour syntax highligting
@@ -83,9 +84,6 @@ nnoremap <Leader>o :enew<CR>
 nnoremap <Leader>w :w<CR>
 nmap <Leader>p "+p
 nmap <Leader>P "+P
-" }}}
-" Launch Config {{{
-execute pathogen#infect()                  
 " }}}
 " Folding {{{
 set foldmethod=indent   " fold based on indent level
