@@ -18,6 +18,13 @@ collection of personal configuration files and scripts
     - main xmonad configuration file, spawns some of the scripts in this folder (invaders.bash)
 - **.vimrc**
   - main configuration file for vim and gvim
+  - plugins to install first:
+    - [Pathogen](https://github.com/tpope/vim-pathogen) for installation of other plugins.
+    - [Syntastic](https://github.com/scrooloose/syntastic) for syntax highlighting.
+    - [NERDTree](https://github.com/scrooloose/nerdtree) to explore filesytem tree.
+    - [Solarized](https://github.com/altercation/vim-colors-solarized) for the Solarized colorscheme.
+    - [Vundle](https://github.com/VundleVim/Vundle.vim) for installation of other plugins ([vim-minimap](https://github.com/severin-lemaignan/vim-minimap)).
+      - run `:PluginInstall` from in Vim, to install other plugins in vimrc using Vundle.
 - **.xmobarrc**
   - main configuration file for xmobar, which is run from xmonad
   - runs some scripts from the .xmonad directory
